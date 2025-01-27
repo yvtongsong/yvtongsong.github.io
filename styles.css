@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap');
+
+body {
+  font-family: "Noto Sans SC", serif;
+  font-optical-sizing: auto;
+  font-weight: 490;
+  font-style: normal;
+}
