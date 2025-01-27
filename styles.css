@@ -3,6 +3,6 @@
 body {
   font-family: "Noto Sans SC", serif;
   font-optical-sizing: auto;
-  font-weight: 490;
+  font-weight: <weight>;
   font-style: normal;
 }
