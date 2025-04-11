@@ -1,22 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>宋雨桐</title>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Code Rain</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+        
+        canvas {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-	<h1>宋雨桐</h1>
-	<p>你好！我是计算机科学与技术的大三学生！请多指教！</p>
-	<p>
-		<li>
-			正在学习:Rust
-		</li>
-		<li>
-			最近的项目：计算机网络协议的动画模拟
-			<a href="https://github.com/yvtongsong/RDTAnimation">RDTAnimation</a>
-		</li>
-		<li>My favorite wallpaper: <a href="https://wallhaven.cc/w/yxdrex">universe</a></li>
-	</p>
+    <canvas id="matrix"></canvas>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        // 设置画布大小为窗口大小
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 定义字符集 - 可以使用日文字符增加电影感
+        const chars = "日ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍｦｲｸｺｿﾁﾄﾉﾌﾔﾖﾙﾚﾛﾝ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        
+        // 计算列数 (基于字体大小)
+        const fontSize = 16;
+        const columns = Math.floor(canvas.width / fontSize);
+        
+        // 每列的Y位置
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100; // 从屏幕上方随机位置开始
+        }
+
+        // 绘制函数
+        function draw() {
+            // 半透明黑色背景 - 产生拖尾效果
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0'; // 矩阵绿色
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                // 随机字符
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                
+                // 绘制字符
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                // 重置到达底部的列
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                // 下移Y坐标
+                drops[i]++;
+            }
+        }
+
+        // 调整窗口大小
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 每50毫秒绘制一次
+        setInterval(draw, 40);
+    </script>
 </body>
 </html>
